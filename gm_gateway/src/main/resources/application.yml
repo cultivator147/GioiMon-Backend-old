@@ -1,0 +1,9 @@
+server.port: 10440
+spring:
+  application:
+    name: GM-GATEWAY
+spring.cloud.gateway.routes:
+    - id: GM-ADMIN
+      uri: http://localhost:8800
+      predicates:
+        - Path=/gm_adm/**

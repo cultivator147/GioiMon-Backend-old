@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>hust.project.gioimon.gm_administrator</groupId>
-        <artifactId>GioiMon-Administrator</artifactId>
+        <groupId>hust.project.gioimon</groupId>
+        <artifactId>gm-administrator</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
