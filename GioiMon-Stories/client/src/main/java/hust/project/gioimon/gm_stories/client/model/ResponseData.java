@@ -1,9 +1,8 @@
-package hust.project.gioimon.gm_stories.model;
+package hust.project.gioimon.gm_stories.client.model;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import lombok.Getter;
 
 @Getter

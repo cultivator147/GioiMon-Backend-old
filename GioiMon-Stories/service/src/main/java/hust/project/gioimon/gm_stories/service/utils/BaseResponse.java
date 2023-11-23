@@ -1,6 +1,6 @@
-package hust.project.gioimon.gm_stories.utils;
+package hust.project.gioimon.gm_stories.service.utils;
 
-import hust.project.gioimon.gm_stories.model.ResponseData;
+import hust.project.gioimon.gm_stories.client.model.ResponseData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 public class BaseResponse {
