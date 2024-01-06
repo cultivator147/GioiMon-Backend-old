@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
+      - ./data:/var/lib/mysql
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: stories
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+  eureka-sever:
+    build:
+      context: ../eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8803:8803
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_USER_NAME: admin
+      DATABASE_PASSWORD: admin
+    depends_on:
+      - mysql
+      - eureka-sever
+volumes:
+  data:
+
+
+
+
+

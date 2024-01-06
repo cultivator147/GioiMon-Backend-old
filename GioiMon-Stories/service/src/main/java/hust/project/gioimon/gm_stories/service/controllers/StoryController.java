@@ -20,14 +20,26 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 public class StoryController {
     private final FilteredListStoriesService filteredListStoriesService;
+
     @GetMapping("/filtered-list-story")
     public ResponseEntity<ResponseData<Page<SampleStoryDTO>>> getFilteredListStories(
             @RequestParam(defaultValue = "0") long categoryId,
             @RequestParam(defaultValue = "0") int writingState,
-            @RequestParam(required = false) int page,
-            @RequestParam(required = false) int size,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "20") int size,
             @RequestParam(defaultValue = FilterConstants.SORT_BY_UPDATE_DATE) String sortBy
-            ) {
+    ) {
         return BaseResponse.success(filteredListStoriesService.getFilteredListStories(categoryId, writingState, page, size, sortBy));
+    }
+
+    @GetMapping("/suggested-list-stories")
+    public ResponseEntity<ResponseData<List<SampleStoryDTO>>> getSuggestedListStories(
+    ) {
+        return BaseResponse.success(filteredListStoriesService.getSuggestedListStories());
+    }
+    @GetMapping("/reading-history")
+    public ResponseEntity<ResponseData<List<SampleStoryDTO>>> getReadingHistory(
+    ) {
+        return BaseResponse.success(filteredListStoriesService.getSuggestedListStories());
     }
 }

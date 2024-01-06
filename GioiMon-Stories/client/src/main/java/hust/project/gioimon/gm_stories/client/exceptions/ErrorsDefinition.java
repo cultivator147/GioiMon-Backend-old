@@ -72,9 +72,7 @@ public enum ErrorsDefinition implements TypeError {
     public static ErrorsDefinition of(Exception ex) {
         try {
             String classError = ex.getClass().getSimpleName();
-            log.info("@@@@@" + classError);
             OBJECT_ERROR objectName = OBJECT_ERROR.valueOf(classError);
-            log.info("####" + objectName);
             return switch (objectName) {
                 case UsernameExistedException -> USERNAME_EXISTED_EXCEPTION;
                 case UserDoesNotExistException -> USER_DOES_NOT_EXIST_EXCEPTION;

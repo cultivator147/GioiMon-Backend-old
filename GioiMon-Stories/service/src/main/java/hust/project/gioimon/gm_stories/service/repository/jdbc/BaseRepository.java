@@ -29,7 +29,6 @@ public class BaseRepository {
     }
     public <T> T queryForObject(String queryString, Map<String, Object> mapParam, Class<T> className) {
         try {
-            log.info("param {}", mapParam);
             if (className.isAssignableFrom(Long.class) || className.isAssignableFrom(Integer.class) || className.isAssignableFrom(Double.class) || className.isAssignableFrom(String.class)) {
                 return jdbcTemplate.queryForObject(queryString, mapParam, className);
             } else {
@@ -42,7 +41,6 @@ public class BaseRepository {
     }
     public <T> List<T> getListData(String queryString, Map<String, Object> mapParam, Class<T> className) {
         try {
-            log.info("param {}", mapParam);
             if (className.isAssignableFrom(Long.class) || className.isAssignableFrom(Integer.class) || className.isAssignableFrom(Double.class) || className.isAssignableFrom(String.class)) {
                 return jdbcTemplate.queryForList(queryString, mapParam, className);
             } else {
@@ -54,7 +52,6 @@ public class BaseRepository {
         }
     }
     public <T> List<T> getListData(String queryString, Map<String, Object> mapParams, Class<T> className, Integer startPage, Integer pageSize){
-        log.info("param {}", mapParams);
         startPage = startPage == null || startPage < 0 ? 0 : startPage;
         pageSize = pageSize == null || pageSize < 0 ? 10 : pageSize;
         StringBuilder sqlPage = new StringBuilder();
@@ -66,7 +63,6 @@ public class BaseRepository {
     }
     public <T> Page<T> getPage(String queryString, Map<String, Object> mapParams, Integer startPage, Integer pageSize, Class<T> className, String sortBy, String direction){
         try {
-            log.info("param {}", mapParams);
             startPage = startPage == null || startPage < 0 ? 0 : startPage;
             pageSize = pageSize == null || pageSize < 0 ? 10 : pageSize;
             StringBuilder sqlPage = new StringBuilder();
@@ -89,7 +85,6 @@ public class BaseRepository {
     }
     public <T> Page<T> getPage(String queryString, Map<String, Object> mapParams, Integer startPage, Integer pageSize, Class<T> className){
         try {
-            log.info("param {}", mapParams);
             startPage = startPage == null || startPage < 0 ? 0 : startPage;
             pageSize = pageSize == null || pageSize < 0 ? 10 : pageSize;
             StringBuilder sqlPage = new StringBuilder();

@@ -16,6 +16,7 @@ public class SampleStoryDTO {
     private long id;
     private String title;
     private String link;
+    private String picture;
     private Date lastUpdateDate;
     private long views;
     private long comments;

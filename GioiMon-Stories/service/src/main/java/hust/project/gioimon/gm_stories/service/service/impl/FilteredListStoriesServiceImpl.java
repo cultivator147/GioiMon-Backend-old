@@ -18,4 +18,9 @@ public class FilteredListStoriesServiceImpl implements FilteredListStoriesServic
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, int page, int size, String sortBy) {
         return storiesRepository.getFilteredListStories(categoryId, writingState, page, size, sortBy);
     }
+
+    @Override
+    public List<SampleStoryDTO> getSuggestedListStories() {
+        return storiesRepository.getSuggestedListStories();
+    }
 }
