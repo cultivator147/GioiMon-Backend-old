@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO {
-    private String id;
-    private String name;
-    private String description;
+public class ContentDTO {
+    private String title;
+    private String chapterName;
+    private String[] images;
 }

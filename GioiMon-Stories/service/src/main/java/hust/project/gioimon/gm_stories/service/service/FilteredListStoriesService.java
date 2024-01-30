@@ -10,4 +10,6 @@ import java.util.List;
 public interface FilteredListStoriesService {
     Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, int page, int size, String sortBy);
     List<SampleStoryDTO> getSuggestedListStories();
+    Page<SampleStoryDTO> getTopStories(long categoryId, int page, int size, String sortBy);
+
 }

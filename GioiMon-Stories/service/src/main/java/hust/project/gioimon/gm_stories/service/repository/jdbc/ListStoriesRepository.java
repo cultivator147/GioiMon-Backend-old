@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class StoriesRepository extends BaseRepository {
+public class ListStoriesRepository extends BaseRepository {
     private final ChaptersRepository chaptersRepository;
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, int page, int size, String sortBy){
         StringBuilder sqlBuilder = new StringBuilder("""
@@ -30,7 +30,7 @@ public class StoriesRepository extends BaseRepository {
                 ) T1
                 JOIN categories C ON T1.CATEGORY_ID = C.ID
                 WHERE 
-                (CASE WHEN :CATEGORY_ID = 0 THEN :CATEGORY_ID ELSE C.ID END
+                (CASE WHEN :CATEGORY_ID = 1 THEN :CATEGORY_ID ELSE C.ID END
                 	)
                 	= :CATEGORY_ID 
                 GROUP BY ID
@@ -41,8 +41,6 @@ public class StoriesRepository extends BaseRepository {
         params.put("WRITING_STATE", writingState);
         Page<SampleStoryDTO> sampleStoryDTOS = getPage(sqlBuilder.toString(), params, page, size, SampleStoryDTO.class);
         sampleStoryDTOS.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
-//        List<SampleStoryDTO> stories = getListData(sqlBuilder.toString(), params, SampleStoryDTO.class, page, size);
-//        stories.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
         return sampleStoryDTOS;
     }
     public List<SampleStoryDTO> getSuggestedListStories(){

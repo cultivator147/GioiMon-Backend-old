@@ -13,8 +13,8 @@ import java.util.Date;
 public class ChapterDTO {
     private String chapterNumber;
     private String chapterName;
-    private String link;
-    private String content;
+    private String picture;
+    private String[] content;
     private Date updateDate;
     private long views;
     private int scope;

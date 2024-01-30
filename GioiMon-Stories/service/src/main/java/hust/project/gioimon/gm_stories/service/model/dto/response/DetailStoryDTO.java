@@ -12,19 +12,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class  DetailStoryDTO {
-    private String id;
-    private String title;
+public class  DetailStoryDTO extends SampleStoryDTO{
     private int contentType;
     private String introduction;
     private String gender;
-    private long views;
-    private long comments;
-    private long loves;
-    private int writingState;
-    private Date lastUpdateDate;
+    private String writingState;
     private long chapterQuantity;
-    private List<ChapterDTO> chapters;
     private List<CategoryDTO> categories;
-//    private List<AuthorDTO> authors;
+    private List<AuthorDTO> authors;
 }
