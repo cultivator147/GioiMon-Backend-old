@@ -11,4 +11,22 @@ CREATE TABLE USERS(
     UNIQUE KEY(`USERNAME`)
 );
 
+CREATE TABLE profiles
+(
+    user_id               BIGINT primary KEY,
+    nickname             VARCHAR(200),
+    picture              VARCHAR(2048),
+    date_of_birth        VARCHAR(100),
+    zodiac               VARCHAR(100),
+    gender               VARCHAR(50),
+    introduction         VARCHAR(500),
+    onboard              TINYINT DEFAULT 0,
+    location             VARCHAR(200),
+    additional_information JSON
+--                                hobbies VARCHAR(100),height VARCHAR(20),career JSON,education VARCHAR(50),
+--                                hometown VARCHAR(200),living_in VARCHAR(200), sexual_orientation VARCHAR(100),drinking VARCHAR(100),
+    --                                religion VARCHAR(100), smoking VARCHAR(100),children VARCHAR(100), favourite_place VARCHAR(200),
+--                                political VARCHAR(100),language VARCHAR(100), location VARCHAR(200)
+);
+
 

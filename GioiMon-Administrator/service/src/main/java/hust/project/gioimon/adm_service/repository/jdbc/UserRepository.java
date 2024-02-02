@@ -31,10 +31,9 @@ public class UserRepository extends BaseRepository {
     }
 
     public LoginResponseDTO getUser(String username, String password) {
-        log.info("^^^^^^^^" + username + password);
         String hashedPassword = StringUtil.Hash(password);
         String sql = """
-                    SELECT ID, ACCESS_TOKEN FROM USERS
+                    SELECT USERNAME, ID, ACCESS_TOKEN FROM USERS
                     WHERE
                     USERNAME = :USERNAME
                     AND PASSWORD = :PASSWORD

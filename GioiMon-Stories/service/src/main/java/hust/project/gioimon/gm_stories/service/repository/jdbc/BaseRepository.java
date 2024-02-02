@@ -58,7 +58,7 @@ public class BaseRepository {
         sqlPage.append(" SELECT * FROM ( ");
         sqlPage.append(queryString);
         sqlPage.append(" ) a ");
-        sqlPage.append(String.format(" OFFSET %d ROWS FETCH NEXT %d ROWS ONLY ", startPage, pageSize));
+        sqlPage.append(String.format(" OFFSET %d ROWS FETCH NEXT %d ROWS ONLY ", startPage * pageSize, pageSize));
         return getListData(sqlPage.toString(), mapParams, className);
     }
     public <T> Page<T> getPage(String queryString, Map<String, Object> mapParams, Integer startPage, Integer pageSize, Class<T> className, String sortBy, String direction){
@@ -72,7 +72,7 @@ public class BaseRepository {
             if(sortBy != null && !sortBy.isEmpty()){
                 sqlPage.append(String.format("ORDER BY %s %s", sortBy, direction));
             }
-            sqlPage.append(String.format(" OFFSET %d ROWS FETCH NEXT %d ROWS ONLY ", startPage, pageSize));
+            sqlPage.append(String.format(" OFFSET %d ROWS FETCH NEXT %d ROWS ONLY ", startPage * pageSize, pageSize));
             String sqlCount = "SELECT COUNT(1) FROM (" + queryString + ") AS COUNT_RESULT";
             Long records = jdbcTemplate.queryForObject(sqlCount, mapParams, Long.class);
             List<T> resultQuery = getListData(sqlPage.toString(), mapParams, className);
@@ -91,7 +91,7 @@ public class BaseRepository {
             sqlPage.append(" SELECT * FROM ( ");
             sqlPage.append(queryString);
             sqlPage.append(" ) a ");
-            sqlPage.append(String.format(" OFFSET %d ROWS FETCH NEXT %d ROWS ONLY ", startPage, pageSize));
+            sqlPage.append(String.format(" OFFSET %d ROWS FETCH NEXT %d ROWS ONLY ", startPage * pageSize, pageSize));
             String sqlCount = "SELECT COUNT(1) FROM (" + queryString + ") AS COUNT_RESULT";
             Long records = jdbcTemplate.queryForObject(sqlCount, mapParams, Long.class);
             List<T> resultQuery = getListData(sqlPage.toString(), mapParams, className);

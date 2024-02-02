@@ -26,8 +26,8 @@ public class ListStoryController {
             @RequestParam(defaultValue = "0", name = "category_id") long categoryId,
             @RequestParam(defaultValue = "0", name = "writing_state") int writingState,
             @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "20") int size,
-            @RequestParam(defaultValue = FilterConstants.SORT_BY_UPDATE_DATE) String sortBy
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(defaultValue = FilterConstants.SORT_BY_UPDATE_DATE, name = "sort_by") String sortBy
     ) {
         return BaseResponse.success(filteredListStoriesService.getFilteredListStories(categoryId, writingState, page, size, sortBy));
     }

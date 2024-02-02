@@ -7,14 +7,12 @@ import hust.project.gioimon.adm_service.service.AuthenticationService;
 import hust.project.gioimon.adm_service.utils.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1.0/auth")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/login")
