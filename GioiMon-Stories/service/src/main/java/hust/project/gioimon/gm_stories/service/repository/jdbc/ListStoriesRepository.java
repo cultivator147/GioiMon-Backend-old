@@ -52,4 +52,49 @@ public class ListStoriesRepository extends BaseRepository {
         results.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
         return results;
     }
+    public List<SampleStoryDTO> topMonthly(){
+        StringBuilder sql = new StringBuilder("""
+                    SELECT *
+                    FROM stories
+                    JOIN (
+                    SELECT stories_chapters.story_id, SUM(VIEWS) AS TOTAL_VIEWS
+                    FROM stories_chapters
+                    GROUP BY stories_chapters.story_id)ct ON stories.id = ct.STORY_ID
+                    ORDER BY TOTAL_VIEWS DESC
+                """);
+        List<SampleStoryDTO> results = getListData(sql.toString(), null, SampleStoryDTO.class);
+        results.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
+        return results;
+    }
+    public List<SampleStoryDTO> topDaily(){
+        StringBuilder sql = new StringBuilder("""
+                    SELECT *
+                                        FROM stories
+                                        JOIN (
+                                        SELECT stories_chapters.story_id, SUM(VIEWS) AS TOTAL_VIEWS
+                                        FROM stories_chapters
+                                        GROUP BY stories_chapters.story_id)ct ON stories.id = ct.STORY_ID
+                                        ORDER BY RAND() DESC
+                """);
+        List<SampleStoryDTO> results = getListData(sql.toString(), null, SampleStoryDTO.class);
+        results.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
+        return results;
+    }
+    public Page<SampleStoryDTO> search(String keyword, int page, int size){
+        StringBuilder sqlBuilder = new StringBuilder("""
+                SELECT T1.ID AS ID, T1.TITLE AS TITLE, T1.LINK AS LINK, T1.PICTURE AS PICTURE, T1.CATEGORY_ID AS CATEGORY_ID, T1.LAST_UPDATE_DATE
+                FROM (
+                SELECT S.ID AS ID, S.TITLE AS TITLE, S.LINK AS LINK, S.PICTURE AS PICTURE, S.LAST_UPDATE_DATE, SC.CATEGORY_ID AS CATEGORY_ID
+                FROM stories S
+                """)
+                .append(" JOIN stories_categories SC ON SC.STORY_ID = S.ID")
+                .append(" WHERE S.title LIKE '%").append(keyword).append("%'")
+                .append(" OR S.keyword LIKE '%").append(keyword).append("%' ) T1 ")
+                .append(" JOIN categories C ON T1.CATEGORY_ID = C.ID")
+                .append(" GROUP BY ID");
+        Map<String, Object> params = new HashMap<>();
+        Page<SampleStoryDTO> sampleStoryDTOS = getPage(sqlBuilder.toString(), params, page, size, SampleStoryDTO.class);
+        sampleStoryDTOS.stream().forEach(story -> story.setChapters(chaptersRepository.getListChapters(story.getId(), 0, 3)));
+        return sampleStoryDTOS;
+    }
 }

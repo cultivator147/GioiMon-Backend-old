@@ -13,7 +13,8 @@ CREATE TABLE STORIES(
     WRITING_STATE BINARY NOT NULL DEFAULT 1 COMMENT '0 - All; 1 - UNCOMPLETE. 2 - COMPLETE. -1 : CANCEL',
     LAST_UPDATE_DATE DATETIME,
     CHAPTER_QUANTITY BIGINT NOT NULL DEFAULT 1,
-    FLAG_STATUS BINARY NOT NULL DEFAULT 1  COMMENT 'Trạng thái bị xóa/hiển thị của truyện. 1 - Active   0 - Inactive'
+    FLAG_STATUS BINARY NOT NULL DEFAULT 1  COMMENT 'Trạng thái bị xóa/hiển thị của truyện. 1 - Active   0 - Inactive',
+    KEYWORD TEXT,
 )
 COMMENT='Thông tin cơ bản của truyện'
 COLLATE='utf8mb4_general_ci'

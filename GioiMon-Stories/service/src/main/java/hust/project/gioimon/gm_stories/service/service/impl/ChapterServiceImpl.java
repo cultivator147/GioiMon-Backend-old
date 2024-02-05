@@ -25,4 +25,12 @@ public class ChapterServiceImpl implements ChapterService {
     public String[] getImages(long storyId, long chapterNumber){
         return chaptersRepository.getImages(storyId, chapterNumber);
     }
+
+    @Override
+    public long getQuantity(long storyId) {
+        return chaptersRepository.getQuantity(storyId);
+    }
+    public void plusView(long storyId, long chapterNumber){
+        chaptersRepository.plusView(storyId, chapterNumber);
+    }
 }

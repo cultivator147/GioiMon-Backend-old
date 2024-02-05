@@ -56,4 +56,17 @@ public class ChaptersRepository extends BaseRepository{
         }
         return images;
     }
+    public long getQuantity(long storyId){
+        String sql = "SELECT COUNT(*) AS quantity FROM stories_chapters WHERE story_id = :storyId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("storyId", storyId);
+        return  queryForObject(sql, params, Long.class);
+    }
+    public void plusView(long storyId, long chapterNumber){
+        String sql = "UPDATE stories_chapters SET VIEWS = VIEWS + 1 WHERE STORY_ID = :storyId AND CHAPTER_NUMBER = :chapterNumber";
+        Map<String, Object> params = new HashMap<>();
+        params.put("storyId", storyId);
+        params.put("chapterNumber", chapterNumber);
+        executeSqlDatabase(sql, params);
+    }
 }

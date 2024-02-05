@@ -13,4 +13,5 @@ public class ContentDTO {
     private String title;
     private String chapterName;
     private String[] images;
+    private long chapterQuantity;
 }

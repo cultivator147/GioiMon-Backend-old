@@ -25,11 +25,12 @@ public class ListStoryController {
     public ResponseEntity<ResponseData<Page<SampleStoryDTO>>> getFilteredListStories(
             @RequestParam(defaultValue = "0", name = "category_id") long categoryId,
             @RequestParam(defaultValue = "0", name = "writing_state") int writingState,
+            @RequestParam(defaultValue = "", name = "keyword") String keyword,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(defaultValue = FilterConstants.SORT_BY_UPDATE_DATE, name = "sort_by") String sortBy
     ) {
-        return BaseResponse.success(filteredListStoriesService.getFilteredListStories(categoryId, writingState, page, size, sortBy));
+        return BaseResponse.success(filteredListStoriesService.getFilteredListStories(categoryId, writingState,keyword, page, size, sortBy));
     }
 
     @GetMapping("/suggested-list-stories")
@@ -50,5 +51,19 @@ public class ListStoryController {
             @RequestParam(defaultValue = FilterConstants.SORT_BY_MONTH) String orderBy
     ) {
         return BaseResponse.success(filteredListStoriesService.getTopStories(categoryId, page, size, orderBy));
+    }
+    @GetMapping("/leaderboard")
+    public ResponseEntity<ResponseData<List<SampleStoryDTO>>> getLeaderboard(
+            @RequestParam(name = "type") String type
+    ) {
+        return BaseResponse.success(filteredListStoriesService.leaderboard(type));
+    }
+    @GetMapping("/search")
+    public ResponseEntity<ResponseData<Page<SampleStoryDTO>>> search(
+            @RequestParam(name = "keyword") String keywork,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
+    ) {
+        return BaseResponse.success(filteredListStoriesService.search(keywork, page, size));
     }
 }
