@@ -17,23 +17,17 @@ import java.util.Map;
 public class ListStoriesRepository extends BaseRepository {
     private final ChaptersRepository chaptersRepository;
     public Page<SampleStoryDTO> getFilteredListStories(long categoryId, int writingState, int page, int size, String sortBy){
-        StringBuilder sqlBuilder = new StringBuilder("""
-                SELECT T1.ID AS ID, T1.TITLE AS TITLE, T1.LINK AS LINK, T1.PICTURE AS PICTURE, T1.CATEGORY_ID AS CATEGORY_ID, T1.LAST_UPDATE_DATE
-                FROM (
-                SELECT S.ID AS ID, S.TITLE AS TITLE, S.LINK AS LINK, S.PICTURE AS PICTURE, S.LAST_UPDATE_DATE, SC.CATEGORY_ID AS CATEGORY_ID
-                FROM stories S
-                JOIN stories_categories SC ON SC.STORY_ID = S.ID
-                WHERE\s
-                	(CASE WHEN :WRITING_STATE = 0 THEN :WRITING_STATE ELSE S.WRITING_STATE END
-                	)
-                	= :WRITING_STATE
-                ) T1
-                JOIN categories C ON T1.CATEGORY_ID = C.ID
-                WHERE 
-                (CASE WHEN :CATEGORY_ID = 1 THEN :CATEGORY_ID ELSE C.ID END
-                	)
-                	= :CATEGORY_ID 
-                GROUP BY ID
+        StringBuilder sqlBuilder = new StringBuilder(""" 
+                       SELECT T1.ID AS ID, T1.TITLE AS TITLE, T1.LINK AS LINK, T1.PICTURE AS PICTURE, T1.CATEGORY_ID AS CATEGORY_ID, T1.LAST_UPDATE_DATE
+                       FROM (
+                           SELECT S.ID AS ID, S.TITLE AS TITLE, S.LINK AS LINK, S.PICTURE AS PICTURE, S.LAST_UPDATE_DATE, SC.CATEGORY_ID AS CATEGORY_ID
+                           FROM stories S
+                           JOIN stories_categories SC ON SC.STORY_ID = S.ID
+                           WHERE (CASE WHEN :WRITING_STATE = 0 THEN :WRITING_STATE ELSE S.WRITING_STATE END) = :WRITING_STATE
+                       ) T1
+                       JOIN categories C ON T1.CATEGORY_ID = C.ID
+                       WHERE (CASE WHEN :CATEGORY_ID = 1 THEN :CATEGORY_ID ELSE C.ID END) = :CATEGORY_ID
+                       GROUP BY T1.ID, T1.TITLE, T1.LINK, T1.PICTURE, T1.CATEGORY_ID, T1.LAST_UPDATE_DATE
          """);
 
         Map<String, Object> params = new HashMap<>();

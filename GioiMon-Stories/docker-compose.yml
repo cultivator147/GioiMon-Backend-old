@@ -1,43 +1,82 @@
+# RUN SOURCE:
+# cd GioiMon-Stories
+# -> docker compose up -d
+
+# GATEWAY 8800
+# STORIES SERIVE 8803
+# ADMIN 8801
+# EUREKA SERVER 8761
+# MYSQL 3307
+
+# ACCESS MYSQL:
+# docker exec -it mysql bash -l
+# --> mysql -uroot -p1234
 version: "3.7"
 services:
   mysql:
+    build: mysql
     image: mysql:latest
     container_name: mysql
     restart: always
-    command: --init-file /data/application/init.sql
     volumes:
-      - ./init.sql:/data/application/init.sql
-      - ./data:/var/lib/mysql
+      - ./bku.sql:/docker-entrypoint-initdb.d/bku.sql
+      - ./users.sql:/docker-entrypoint-initdb.d/users.sql
     ports:
-      - 3307:3307
+      - 3307:3306
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: stories
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-  eureka-sever:
+      MYSQL_DATABASE: gm_stories
+  eureka-server:
     build:
       context: ../eureka-server
       dockerfile: Dockerfile
     ports:
       - 8761:8761
-  backend:
+  gm-stories:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 8803:8803
+    restart: always
     environment:
-      DATABASE_HOST: mysql
-      DATABASE_USER_NAME: admin
-      DATABASE_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_stories?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_URI: http://eureka-server:8761/eureka
     depends_on:
       - mysql
-      - eureka-sever
+      - eureka-server
+  gm-administrator:
+    build:
+      context: ../GioiMon-Administrator
+      dockerfile: Dockerfile
+    ports:
+      - 8801:8801
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gm_users?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      EUREKA_URI: http://eureka-server:8761/eureka
+    depends_on:
+      - mysql
+      - eureka-server
+  gm_gateway:
+    build:
+      context: ../gm_gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8800:8800
+    environment:
+      EUREKA_URI: http://eureka-server:8761/eureka
+      ADMIN_ID: gm-administrator
+      ADMIN_URI: lb://gm-administrator
+      STORY_ID: gm-stories
+      STORY_URI: lb://gm-stories
+    depends_on:
+      - eureka-server
+      - gm-administrator
+      - gm-stories
 volumes:
   data:
-
-
-
-
-

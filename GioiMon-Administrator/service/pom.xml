@@ -63,6 +63,31 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+       
     </dependencies>
+ <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M7</version>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>hust.project.gioimon.adm_service.GioiMonAdministrator</mainClass>
+                        </configuration>
+                    </execution>
 
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
